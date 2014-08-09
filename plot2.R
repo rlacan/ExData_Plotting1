@@ -1,0 +1,12 @@
+## CREATE THE 2nd PLOT
+## READING DATA
+data_energy<-read.table("household_power_consumption.txt",sep=";",header=TRUE) ## read the data from the file on the working directory
+data_energy$Date<-as.Date(data_energy$Date,format="%d/%m/%Y") ## convert the column date on date type
+data_energy1<-subset(data_energy, data_energy$Date=="2007/02/02"|data_energy$Date=="2007/02/01") ## subset the data of 2007/02/02 and 2007/02/01
+data_energy<-data_energy1
+data_energy$Date_Time<-paste(data_energy$Date, data_energy$Time) ## convert de new column with the Date and Time paste
+data_energy$Date_Time<-strptime(data_energy$Date_Time,format="%Y-%m-%d %H:%M:%S") ## convert the data type
+## CREATE THE 2nd PLOT
+par(mfrow=c(1,1),mar=c(4,4,1,2)) ## set general parametres
+with(data_energy,plot(Date_Time,as.numeric(as.character(Global_active_power)),type="l",ylab="Global Active Power (kilowatts)",xlab="",cex=0.7)) ##create de 2nd plot
+png(filename = "plot2.png", width = 480, height = 480, units = "px")
